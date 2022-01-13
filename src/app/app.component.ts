@@ -5,6 +5,13 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
+  
 export class AppComponent {
-  title = 'lesson-one';
+  title: any = 'Lesson one';
+  arr: String[] = ['hello']
+
+  test(): void {
+    this.title = 7
+    this.arr.push('h')
+  }
 }

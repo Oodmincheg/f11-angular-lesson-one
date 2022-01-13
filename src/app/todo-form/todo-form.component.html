@@ -1,0 +1,40 @@
+<form>
+  <div>
+    <label for="todo">{{ placeholder }}:</label>
+    <input
+      type="text"
+      id="todo"
+      name="todo"
+      placeholder="{{ placeholder }}"
+      [(ngModel)]="currentTodo.title"
+    />
+  </div>
+  <div>
+      <label for="desc">Description:</label>
+      <textarea name="desc" id="" cols="30" rows="10" id="desc" [(ngModel)]="currentTodo.desc"></textarea>
+  </div>
+  <div>
+    <label for="deadline">Deadline:</label>
+    <input type="date" id="deadline" name="deadline" [(ngModel)]="currentTodo.deadline"/>
+  </div>
+  <div>
+    <label for="high-priority">High priority:</label>
+    <input type="checkbox" name="high-priority" id="high-priority" [(ngModel)]="currentTodo.highPriority"/>
+  </div>
+
+  <button (click)="saveTodo()">
+      <span *ngIf="!currentTodo.id; else existedTodo">Add todo</span>
+      <ng-template #existedTodo><span>Save changes</span></ng-template>
+    </button>
+  <button (click)="resetCurrentTodo()">reset</button>
+  <h2 *ngIf="!!todoList.length; else emptyListTitle">Todos list:</h2>
+  <ng-template #emptyListTitle><h2>Todo list is empty.</h2></ng-template>
+  <div *ngFor="let todo of todoList; index as i">
+    <p>{{ todo.title }}</p>
+    <p *ngIf="todo.desc">Description: {{todo.desc}}</p>
+    <p *ngIf="todo.deadline">Before {{todo.deadline}}</p>
+    <p *ngIf="todo.highPriority">High priority task</p>
+    <button (click)="deleteTodo(todo.id)">Delete</button>
+    <button (click)="setCurrentTodo(todo)">Change todo</button>
+  </div>
+</form>

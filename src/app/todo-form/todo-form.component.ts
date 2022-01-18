@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 type Todo = {
   title: string;
-  id?: Symbol;
+  id?: number;
   desc?: string;
   highPriority?: boolean;
   deadline?: Date;
@@ -16,37 +17,53 @@ const emptyTodo = {
   templateUrl: './todo-form.component.html',
   styleUrls: ['./todo-form.component.sass'],
 })
-  
-
-export class TodoFormComponent {
+export class TodoFormComponent implements OnInit {
   todoList: Todo[] = [];
-  currentTodo: Todo = {...emptyTodo};
+  currentTodo: Todo = { ...emptyTodo };
   placeholder = 'Enter your todo';
 
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.loadTodos();
+  }
   saveTodo() {
     if (!this.currentTodo.title) {
-      return
+      return;
     }
     if (!this.currentTodo.id) {
-      this.todoList.push({ ...this.currentTodo, id: Symbol() })
+      this.http
+        .post('http://localhost:3000/todos', this.currentTodo)
+        .subscribe(() => this.loadTodos());
     } else {
-      let todoToChange: any = this.todoList.find(todo => todoToChange.id === todo.id)
-      todoToChange = {...this.currentTodo}
+      this.http
+        .put(
+          `http://localhost:3000/todos/${this.currentTodo.id}`,
+          this.currentTodo,
+        )
+        .subscribe(() => this.loadTodos);
     }
-    
+
     this.resetCurrentTodo();
   }
 
-  deleteTodo(id: Symbol | undefined) {
-    this.todoList = this.todoList.filter((todo) => todo.id !== id)
+  loadTodos() {
+    this.http
+      .get('http://localhost:3000/todos')
+      .subscribe((todos: any) => (this.todoList = todos));
   }
-  
+
+  deleteTodo(id: number | undefined) {
+    this.http
+      .delete(`http://localhost:3000/todos/${id}`)
+      .subscribe(() => this.loadTodos());
+  }
+
   resetCurrentTodo() {
-    this.currentTodo = {...emptyTodo}
+    this.currentTodo = { ...emptyTodo };
   }
 
   setCurrentTodo(todo: Todo) {
-    this.currentTodo = {...todo}
+    this.currentTodo = { ...todo };
   }
-  
 }

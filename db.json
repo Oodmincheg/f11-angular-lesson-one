@@ -1,0 +1,18 @@
+{
+  "todos": [
+    {
+      "highPriority": true,
+      "title": "Learn react",
+      "id": 1
+    },
+    {
+      "title": "Learn angular",
+      "id": 2,
+      "highPriority": true
+    },
+    {
+      "title": "Learn vue",
+      "id": 3
+    }
+  ]
+}

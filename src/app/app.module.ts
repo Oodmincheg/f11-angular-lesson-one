@@ -9,12 +9,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { TodosService } from './shared/todos.service';
 import { TodoListComponent } from './todos/todo-list/todo-list.component';
 import { TodosComponent } from './todos/todos.component';
+import { LoginComponent } from './login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
     TodoFormComponent,
     TodoListComponent,
-    TodosComponent
+    TodosComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

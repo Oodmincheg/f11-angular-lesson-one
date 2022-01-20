@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Todo } from '../todo-form/todo-form.component';
+import { Todo } from './types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodosService {
   get() {
-    return this.http.get('http://localhost:3000/todos');
+    return this.http.get<Todo[]>('http://localhost:3000/todos');
   }
 
   post(todo: Todo) {

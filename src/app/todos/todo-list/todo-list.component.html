@@ -1,0 +1,10 @@
+ <h2 *ngIf="!!todoList.length; else emptyListTitle">Todos list:</h2>
+  <ng-template #emptyListTitle><h2>Todo list is empty.</h2></ng-template>
+  <div *ngFor="let todo of todoList; index as i">
+    <p>{{ todo.title }}</p>
+    <p *ngIf="todo.desc">Description: {{todo.desc}}</p>
+    <p *ngIf="todo.deadline">Before {{todo.deadline}}</p>
+    <p *ngIf="todo.highPriority">High priority task</p>
+    <button (click)="deleted(todo.id)">Delete</button>
+    <button (click)="selectTodo(todo)">Change todo</button>
+  </div>

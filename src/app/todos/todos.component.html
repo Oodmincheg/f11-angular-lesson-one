@@ -1,0 +1,10 @@
+<app-todo-form
+  [currentTodo]="currentTodo"
+  (saveTodo)="saveTodo()"
+  (resetTodo)="resetCurrentTodo()"
+></app-todo-form>
+<app-todo-list
+  [todoList]="todoList"
+  (setCurrentTodo)="setCurrentTodo($event)"
+  (deleteTodo)="deleteTodo($event)"
+></app-todo-list>

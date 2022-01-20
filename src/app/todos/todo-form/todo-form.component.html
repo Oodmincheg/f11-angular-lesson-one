@@ -1,11 +1,11 @@
 <form>
   <div>
-    <label for="todo">{{ placeholder }}:</label>
+    <label for="todo">Enter your todo</label>
     <input
       type="text"
       id="todo"
       name="todo"
-      placeholder="{{ placeholder }}"
+      placeholder="Enter your todo"
       [(ngModel)]="currentTodo.title"
     />
   </div>
@@ -22,19 +22,11 @@
     <input type="checkbox" name="high-priority" id="high-priority" [(ngModel)]="currentTodo.highPriority"/>
   </div>
 
-  <button (click)="saveTodo()">
+  <button (click)="saved()">
       <span *ngIf="!currentTodo.id; else existedTodo">Add todo</span>
       <ng-template #existedTodo><span>Save changes</span></ng-template>
     </button>
-  <button (click)="resetCurrentTodo()">reset</button>
-  <h2 *ngIf="!!todoList.length; else emptyListTitle">Todos list:</h2>
-  <ng-template #emptyListTitle><h2>Todo list is empty.</h2></ng-template>
-  <div *ngFor="let todo of todoList; index as i">
-    <p>{{ todo.title }}</p>
-    <p *ngIf="todo.desc">Description: {{todo.desc}}</p>
-    <p *ngIf="todo.deadline">Before {{todo.deadline}}</p>
-    <p *ngIf="todo.highPriority">High priority task</p>
-    <button (click)="deleteTodo(todo.id)">Delete</button>
-    <button (click)="setCurrentTodo(todo)">Change todo</button>
-  </div>
-</form>
+  <button (click)="reseted()">reset</button>
+  </form>
+ 
+

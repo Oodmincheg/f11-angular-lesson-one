@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { TodosService } from '../shared/todos.service';
 
-type Todo = {
+export type Todo = {
   title: string;
   id?: number;
   desc?: string;
@@ -22,7 +23,7 @@ export class TodoFormComponent implements OnInit {
   currentTodo: Todo = { ...emptyTodo };
   placeholder = 'Enter your todo';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private todosService: TodosService) {} // dependency injection
 
   ngOnInit() {
     this.loadTodos();
@@ -32,30 +33,25 @@ export class TodoFormComponent implements OnInit {
       return;
     }
     if (!this.currentTodo.id) {
-      this.http
-        .post('http://localhost:3000/todos', this.currentTodo)
+      this.todosService.post(this.currentTodo)
         .subscribe(() => this.loadTodos());
     } else {
-      this.http
-        .put(
-          `http://localhost:3000/todos/${this.currentTodo.id}`,
-          this.currentTodo,
-        )
-        .subscribe(() => this.loadTodos);
+      this.todosService.put(this.currentTodo)
+        .subscribe(() => this.loadTodos());
     }
 
     this.resetCurrentTodo();
   }
 
   loadTodos() {
-    this.http
-      .get('http://localhost:3000/todos')
-      .subscribe((todos: any) => (this.todoList = todos));
+    this.todosService.get().subscribe((todos: any) => (this.todoList = todos));
   }
 
   deleteTodo(id: number | undefined) {
-    this.http
-      .delete(`http://localhost:3000/todos/${id}`)
+    if (!id) {
+      return
+    }
+    this.todosService.delete(id)
       .subscribe(() => this.loadTodos());
   }
 
@@ -67,3 +63,4 @@ export class TodoFormComponent implements OnInit {
     this.currentTodo = { ...todo };
   }
 }
+// CRUD - create read update delete. post get put delete.
